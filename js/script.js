@@ -6,10 +6,10 @@ FSJS Project 2 - Data Pagination and Filtering
 // ELEMENT SELECTORS
 // select the element with a class of `student-list` and assign it to a variable
 const studentList = document.querySelector(".student-list");
-console.log(studentList);
+// console.log(studentList);
 // select the element with a class of `link-list` and assign it to a variable
 const linkList = document.querySelector(".link-list");
-console.log(linkList);
+// console.log(linkList);
 
 // console.log(data);
 const studentsPerPage = 9;
@@ -29,7 +29,7 @@ This function will create and insert/append the elements needed to display a "pa
 function showPage(list, page) {
    // create two variables that will represent the index for the first and last student on the page
    startIndex = (page * studentsPerPage) - studentsPerPage;
-   endIndex  = page * studentsPerPage - 1;
+   endIndex  = (page * studentsPerPage) - 1;
 
    // set the innerHTML property of the variable you just created to an empty string
    studentList.innerHTML = "";
@@ -103,7 +103,7 @@ function addPagination(list) {
          // add the active class to the clicked button
          buttonClicked.classList.add("active");
          // call the showPage function passing the `list` parameter and page to display as arguments
-         showPage(data, buttonClicked.innerHTML);
+         showPage(list, buttonClicked.innerHTML);
       }
          
    });
@@ -134,8 +134,8 @@ function addSearchComponent() {
 }
 
 // Call functions
-showPage(data, 1);
 addPagination(data);
+showPage(data, 1);
 addSearchComponent();
 
 // Add Search Functionality
@@ -151,7 +151,7 @@ searchInput.addEventListener("keyup", e => {
 
    // Create a variable to store the string the user has typed.
    let userInput = e.target.value.toLowerCase();
-   console.log(userInput);
+   // console.log(userInput);
 
    // Loop through the data array of students
    for (let i = 0; i < data.length; i++) {
@@ -162,25 +162,26 @@ searchInput.addEventListener("keyup", e => {
 
       // Conditional to check if the student's first or last name includes the user's input.
       if (studentFullName.includes(userInput)) {
-         console.log(studentFullName);
-         console.log(data[i]);
+         // console.log(studentFullName);
+         // console.log(data[i]);
          newData.push(data[i]);
-         console.log(newData);
       }
-      
-      // Conditional to check if the length of the new array is greater than zero.
-      if (newData.length > 0) {
-         // Call the showPage() function passing it this new data array.
-         showPage(newData, 1);
-         // Call the addPagination() function passing it this new data array.
-         addPagination(newData);
-      } else {
-         // If no matches are found for a search, display a “No results found” type message on the page.
-         const html = `<h3 class="no-results">No Results Found!</h3>`
-         studentList.innerHTML = html;
-         linkList.innerHTML = "";
-      }
+   }
 
+   // console.log(newData);
+   // console.log(newData.length);
+      
+   // Conditional to check if the length of the new array is greater than zero.
+   if (newData.length > 0) {
+      // Call the addPagination() function passing it this new data array.
+      addPagination(newData);
+      // Call the showPage() function passing it this new data array.
+      showPage(newData, 1);
+   } else {
+      // If no matches are found for a search, display a “No results found” type message on the page.
+      const html = `<h3 class="no-results">No Results Found!</h3>`
+      studentList.innerHTML = html;
+      linkList.innerHTML = "";
    }
 
 });
