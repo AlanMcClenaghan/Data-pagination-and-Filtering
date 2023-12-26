@@ -3,6 +3,14 @@ Treehouse Techdegree:
 FSJS Project 2 - Data Pagination and Filtering
 */
 
+// ELEMENT SELECTORS
+// select the element with a class of `student-list` and assign it to a variable
+const studentList = document.querySelector(".student-list");
+console.log(studentList);
+// select the element with a class of `link-list` and assign it to a variable
+const linkList = document.querySelector(".link-list");
+console.log(linkList);
+
 // console.log(data);
 const studentsPerPage = 9;
 
@@ -22,10 +30,6 @@ function showPage(list, page) {
    // create two variables that will represent the index for the first and last student on the page
    startIndex = (page * studentsPerPage) - studentsPerPage;
    endIndex  = page * studentsPerPage - 1;
-
-   // select the element with a class of `student-list` and assign it to a variable
-   const studentList = document.querySelector(".student-list");
-   // console.log(studentList);
 
    // set the innerHTML property of the variable you just created to an empty string
    studentList.innerHTML = "";
@@ -69,10 +73,6 @@ function addPagination(list) {
    // create a variable to calculate the number of pages needed
    const numOfPages = Math.ceil(list.length / studentsPerPage);
 
-   // select the element with a class of `link-list` and assign it to a variable
-   const linkList = document.querySelector(".link-list");
-   // console.log(linkList);
-
    // set the innerHTML property of the variable you just created to an empty string
    linkList.innerHTML = "";
    // console.log(linkList);
@@ -93,7 +93,7 @@ function addPagination(list) {
    linkList.querySelector("button").classList.add("active");
 
    // create an event listener on the `link-list` element
-   linkList.addEventListener("click", (e) => {
+   linkList.addEventListener("click", e => {
       const activeButton = linkList.querySelector(".active");
       const buttonClicked = e.target.closest("button");
       // if the click target is a button:
@@ -127,15 +127,62 @@ function addSearchComponent() {
       <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
    </label>
    `
-   console.log(searchComponent);
+   // console.log(searchComponent);
    const header = document.querySelector(".header");
-   console.log(header);
+   // console.log(header);
    header.insertAdjacentHTML("beforeend", searchComponent);
 }
-
-
 
 // Call functions
 showPage(data, 1);
 addPagination(data);
 addSearchComponent();
+
+// Add Search Functionality
+
+// Get Search Component
+const searchInput = document.querySelector(".student-search");
+
+// Event listener on Search Component
+searchInput.addEventListener("keyup", e => {
+   
+   // Create a variable storing an empty array for the soon-to-be filtered students.
+   const newData = [];
+
+   // Create a variable to store the string the user has typed.
+   let userInput = e.target.value.toLowerCase();
+   console.log(userInput);
+
+   // Loop through the data array of students
+   for (let i = 0; i < data.length; i++) {
+      // Create variables to hold the student name
+      const studentFirstName = data[i].name.first.toLowerCase();
+      const studentLastName = data[i].name.last.toLowerCase();
+      const studentFullName = studentFirstName + " " + studentLastName
+
+      // Conditional to check if the student's first or last name includes the user's input.
+      if (studentFullName.includes(userInput)) {
+         console.log(studentFullName);
+         console.log(data[i]);
+         newData.push(data[i]);
+         console.log(newData);
+      }
+      
+      // Conditional to check if the length of the new array is greater than zero.
+      if (newData.length > 0) {
+         // Call the showPage() function passing it this new data array.
+         showPage(newData, 1);
+         // Call the addPagination() function passing it this new data array.
+         addPagination(newData);
+      } else {
+         // If no matches are found for a search, display a “No results found” type message on the page.
+         const html = `<h3 class="no-results">No Results Found!</h3>`
+         studentList.innerHTML = html;
+         linkList.innerHTML = "";
+      }
+
+   }
+
+});
+
+
