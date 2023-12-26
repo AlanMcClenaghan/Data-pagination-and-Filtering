@@ -28,8 +28,8 @@ This function will create and insert/append the elements needed to display a "pa
 
 function showPage(list, page) {
    // create two variables that will represent the index for the first and last student on the page
-   startIndex = (page * studentsPerPage) - studentsPerPage;
-   endIndex  = (page * studentsPerPage) - 1;
+   const startIndex = (page * studentsPerPage) - studentsPerPage;
+   const endIndex  = (page * studentsPerPage) - 1;
 
    // set the innerHTML property of the variable you just created to an empty string
    studentList.innerHTML = "";
