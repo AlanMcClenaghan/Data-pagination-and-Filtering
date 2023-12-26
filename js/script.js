@@ -112,6 +112,30 @@ function addPagination(list) {
    // console.log(numOfPages);
 }
 
+/*
+Extra Credit
+
+To get an "exceeds" rating, complete all of the steps below:
+*/
+
+// Add a Search Component
+function addSearchComponent() {
+   const searchComponent = `
+   <label for="search" class="student-search">
+      <span>Search by name</span>
+      <input id="search" placeholder="Search by name...">
+      <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+   </label>
+   `
+   console.log(searchComponent);
+   const header = document.querySelector(".header");
+   console.log(header);
+   header.insertAdjacentHTML("beforeend", searchComponent);
+}
+
+
+
 // Call functions
 showPage(data, 1);
 addPagination(data);
+addSearchComponent();
